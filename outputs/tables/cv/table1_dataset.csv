@@ -1,0 +1,12 @@
+Task,Class,Patients,Images,train (patients),val (patients),test (patients)
+H. pylori,positive,104,2848,74.0,15.0,15.0
+H. pylori,negative,125,3035,87.0,19.0,19.0
+Atrophy presence,atrophic,165,4355,,,
+Atrophy presence,non_atrophic,64,1528,,,
+Atrophy distribution,normal,64,1528,45.0,10.0,9.0
+Atrophy distribution,antrum_predominant,74,2043,52.0,11.0,11.0
+Atrophy distribution,corpus_predominant,31,754,22.0,4.0,5.0
+Atrophy distribution,antrum_and_corpus,60,1558,42.0,9.0,9.0
+Gastritis type,type_A,31,754,,,
+Gastritis type,type_B,134,3601,,,
+Gastritis type,normal,64,1528,45.0,10.0,9.0

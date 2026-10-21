@@ -1,0 +1,41 @@
+{
+ "image": {
+  "lr": 0.0003,
+  "dropout": 0.25,
+  "weight_decay": 0.01,
+  "hidden": 256,
+  "input_dropout": 0.3
+ },
+ "mil": {
+  "lr": 0.0003,
+  "dropout": 0.5,
+  "weight_decay": 0.01,
+  "hidden": 256,
+  "input_dropout": 0.3
+ },
+ "criterion": "mean inner-validation NLL over 5 CV folds (seed 0)",
+ "N1": {
+  "lr": 0.0003,
+  "dropout": 0.5,
+  "weight_decay": 0.01,
+  "hidden": 128,
+  "input_dropout": 0.0,
+  "val_nll": 0.5088346540927887
+ },
+ "N3": {
+  "lr": 0.0003,
+  "dropout": 0.25,
+  "weight_decay": 0.1,
+  "hidden": 256,
+  "input_dropout": 0.3,
+  "val_nll": 0.5341037213802338
+ },
+ "N5": {
+  "lr": 0.0003,
+  "dropout": 0.5,
+  "weight_decay": 0.01,
+  "hidden": 128,
+  "input_dropout": 0.3,
+  "val_nll": 0.5128615081310273
+ }
+}

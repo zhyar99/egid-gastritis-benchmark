@@ -1,0 +1,16 @@
+data/
+.venv/
+cache/
+checkpoints/
+logs/
+outputs/smoke/
+outputs/predictions/
+outputs/attention/
+__pycache__/
+.pytest_cache/
+.DS_Store
+Data/
+node_modules/
+
+# final models of every configuration (2.2 GB); rebuild with: sh scripts/train_all_final.sh
+models/final/

@@ -1,0 +1,40 @@
+\begin{table}
+\caption{Model variants and hyper-parameters.}
+\label{tab:table2_models}
+\begin{tabular}{lllllrrlrrrrrr}
+\toprule
+Model & Description & Encoder & Pooling & Head & ViewDropout & Consistency & Loss & lr & wd & hidden & dropout & input\_dropout & TrainableParams \\
+\midrule
+B1 IMG (resnet50) & Image-level heads, patient = mean of image probabilities (EGID protocol) & resnet50 & mean of image probs & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.250000 & 0.300000 & 527371 \\
+B2 IMG (efficientnet\_b0) & Image-level heads, patient = mean of image probabilities (EGID protocol) & efficientnet\_b0 & mean of image probs & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.250000 & 0.300000 & 330763 \\
+B3 IMG (densenet121) & Image-level heads, patient = mean of image probabilities (EGID protocol) & densenet121 & mean of image probs & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.250000 & 0.300000 & 265227 \\
+A0 & Mean-pooling MIL & efficientnet\_b0 & mean & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 330763 \\
+B4 & Gated attention MIL & efficientnet\_b0 & attention & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 396683 \\
+A1 & Task-aware attention MIL (B5) & efficientnet\_b0 & task\_attention & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 594443 \\
+A2 & + structured labels (B6) & efficientnet\_b0 & task\_attention & structured & False & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 461318 \\
+A3 & + view dropout & efficientnet\_b0 & task\_attention & independent & True & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 594443 \\
+A4 & + view dropout + consistency & efficientnet\_b0 & task\_attention & independent & True & True & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 594443 \\
+A5 & + structure + view dropout (B7) & efficientnet\_b0 & task\_attention & structured & True & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 461318 \\
+A6 & Full CoRe-MIL (B8) & efficientnet\_b0 & task\_attention & structured & True & True & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 461318 \\
+X1 & Task attention + soft clinical consistency & efficientnet\_b0 & task\_attention & independent & False & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 594443 \\
+X2 & CoRe-MIL, class-weighted CE & efficientnet\_b0 & task\_attention & structured & True & True & weighted\_ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 461318 \\
+X3 & CoRe-MIL, focal loss & efficientnet\_b0 & task\_attention & structured & True & True & focal & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 461318 \\
+X4 & CoRe-MIL, balanced patient sampling & efficientnet\_b0 & task\_attention & structured & True & True & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 461318 \\
+M2 & Mean pooling + structure (post hoc) & efficientnet\_b0 & mean & structured & False & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 329478 \\
+M3 & Mean pooling + view dropout (post hoc) & efficientnet\_b0 & mean & independent & True & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 330763 \\
+M5 & Mean pooling + structure + view dropout (post hoc) & efficientnet\_b0 & mean & structured & True & False & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 329478 \\
+M6 & CoRe-MIL with mean pooling (post hoc) & efficientnet\_b0 & mean & structured & True & True & ce & 0.000300 & 0.010000 & 256 & 0.500000 & 0.300000 & 329478 \\
+N1 & Top-k MIL (k = 7) & efficientnet\_b0 & topk & independent & False & False & ce & 0.000300 & 0.010000 & 128 & 0.500000 & 0.000000 & 165387 \\
+N2 & Top-k MIL + structured head & efficientnet\_b0 & topk & structured & False & False & ce & 0.000300 & 0.010000 & 128 & 0.500000 & 0.000000 & 164742 \\
+N3 & Task-aware attention + ACMIL-style masking & efficientnet\_b0 & task\_attention & independent & False & False & ce & 0.000300 & 0.100000 & 256 & 0.250000 & 0.300000 & 594443 \\
+N4 & CoRe-MIL + ACMIL-style masking & efficientnet\_b0 & task\_attention & structured & True & True & ce & 0.000300 & 0.100000 & 256 & 0.250000 & 0.300000 & 461318 \\
+N5 & Transformer MIL (TransMIL-style) & efficientnet\_b0 & transformer & independent & False & False & ce & 0.000300 & 0.010000 & 128 & 0.500000 & 0.300000 & 562315 \\
+N6 & Transformer MIL + structured head & efficientnet\_b0 & transformer & structured & False & False & ce & 0.000300 & 0.010000 & 128 & 0.500000 & 0.300000 & 561670 \\
+FT\_IMG (densenet121) & Fine-tuned image-level multitask CNN following the EGID paper protocol (<=25 epochs, patience 5 on validation mean accuracy, mean-probability aggregation) & densenet121 & mean of image probs & independent & False & False & ce & 0.000100 & 0.000100 & 0 & 0.000000 & 0.000000 & 6965131 \\
+FT\_A6 (efficientnet\_b0) & Full CoRe-MIL, end-to-end & efficientnet\_b0 & task\_attention & structured & True & True & ce & 0.000300 & 0.010000 & 256 & 0.250000 & 0.000000 & 4471426 \\
+FT2\_IMG (densenet121) & Fine-tuned image-level multitask CNN, improved recipe (val-NLL early stopping, 10x head lr) & densenet121 & mean of image probs & independent & False & False & ce & 0.001000 & 0.000100 & 0 & 0.200000 & 0.000000 & 6965131 \\
+FT2\_IMG (efficientnet\_b0) & Fine-tuned image-level multitask CNN, improved recipe (val-NLL early stopping, 10x head lr) & efficientnet\_b0 & mean of image probs & independent & False & False & ce & 0.001000 & 0.000100 & 0 & 0.200000 & 0.000000 & 4021639 \\
+FT2\_IMG (resnet50) & Fine-tuned image-level multitask CNN, improved recipe (val-NLL early stopping, 10x head lr) & resnet50 & mean of image probs & independent & False & False & ce & 0.001000 & 0.000100 & 0 & 0.200000 & 0.000000 & 23530571 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,12 @@
+task,column,class_folder,class_value,patients_metadata,images_metadata,patients_folder,images_folder
+hp,H_pylori_infection_status,1.positive,positive,104,2848,104,2848
+hp,H_pylori_infection_status,2.negative,negative,125,3035,125,3035
+atrophy,Presence_of_atrophy,1.atrophic,atrophic,165,4355,165,4355
+atrophy,Presence_of_atrophy,2.non-atrophic,non_atrophic,64,1528,64,1528
+distribution,Distribution_of_atrophy,1.normal,normal,64,1528,64,1528
+distribution,Distribution_of_atrophy,2.antrum_predominant,antrum_predominant,74,2043,74,2043
+distribution,Distribution_of_atrophy,3.corpus_predominant,corpus_predominant,31,754,31,754
+distribution,Distribution_of_atrophy,4.corpus_and_antrum,antrum_and_corpus,60,1558,60,1558
+type,Gastritis_type,1.type_A,type_A,31,754,31,754
+type,Gastritis_type,2.type_B,type_B,134,3601,134,3601
+type,Gastritis_type,3.normal,normal,64,1528,64,1528

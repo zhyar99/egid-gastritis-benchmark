@@ -1,0 +1,6 @@
+task,folder,n_classes,n_patients,n_images,total_gb,extensions
+hp,1.H_pylori_infection_status,2.0,229,5883,6.044110371731222,.bmp
+atrophy,2.Presence_of_atrophy,2.0,229,5883,6.044110371731222,.bmp
+distribution,3.Distribution_of_atrophy,4.0,229,5883,6.044110371731222,.bmp
+type,4.Gastritis_type,3.0,229,5883,6.044110371731222,.bmp
+canonical(unique),,,229,5883,6.044110371731222,

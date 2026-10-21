@@ -1,0 +1,280 @@
+{
+  "findings": [
+    {
+      "source": "H_pylori_infection_status",
+      "target": "Presence_of_atrophy",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 64,
+      "support": {
+        "negative": 125,
+        "positive": 104
+      }
+    },
+    {
+      "source": "Presence_of_atrophy",
+      "target": "H_pylori_infection_status",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 104,
+      "support": {
+        "atrophic": 165,
+        "non_atrophic": 64
+      }
+    },
+    {
+      "source": "H_pylori_infection_status",
+      "target": "Distribution_of_atrophy",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 154,
+      "support": {
+        "negative": 125,
+        "positive": 104
+      }
+    },
+    {
+      "source": "Distribution_of_atrophy",
+      "target": "H_pylori_infection_status",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 92,
+      "support": {
+        "antrum_and_corpus": 60,
+        "antrum_predominant": 74,
+        "corpus_predominant": 31,
+        "normal": 64
+      }
+    },
+    {
+      "source": "H_pylori_infection_status",
+      "target": "Gastritis_type",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 95,
+      "support": {
+        "negative": 125,
+        "positive": 104
+      }
+    },
+    {
+      "source": "Gastritis_type",
+      "target": "H_pylori_infection_status",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 94,
+      "support": {
+        "normal": 64,
+        "type_A": 31,
+        "type_B": 134
+      }
+    },
+    {
+      "source": "Presence_of_atrophy",
+      "target": "Distribution_of_atrophy",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 91,
+      "support": {
+        "atrophic": 165,
+        "non_atrophic": 64
+      }
+    },
+    {
+      "source": "Distribution_of_atrophy",
+      "target": "Presence_of_atrophy",
+      "deterministic": true,
+      "mapping": {
+        "antrum_and_corpus": "atrophic",
+        "antrum_predominant": "atrophic",
+        "corpus_predominant": "atrophic",
+        "normal": "non_atrophic"
+      },
+      "n_patients_violating_majority_map": 0,
+      "support": {
+        "antrum_and_corpus": 60,
+        "antrum_predominant": 74,
+        "corpus_predominant": 31,
+        "normal": 64
+      }
+    },
+    {
+      "source": "Presence_of_atrophy",
+      "target": "Gastritis_type",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 31,
+      "support": {
+        "atrophic": 165,
+        "non_atrophic": 64
+      }
+    },
+    {
+      "source": "Gastritis_type",
+      "target": "Presence_of_atrophy",
+      "deterministic": true,
+      "mapping": {
+        "normal": "non_atrophic",
+        "type_A": "atrophic",
+        "type_B": "atrophic"
+      },
+      "n_patients_violating_majority_map": 0,
+      "support": {
+        "normal": 64,
+        "type_A": 31,
+        "type_B": 134
+      }
+    },
+    {
+      "source": "Distribution_of_atrophy",
+      "target": "Gastritis_type",
+      "deterministic": true,
+      "mapping": {
+        "antrum_and_corpus": "type_B",
+        "antrum_predominant": "type_B",
+        "corpus_predominant": "type_A",
+        "normal": "normal"
+      },
+      "n_patients_violating_majority_map": 0,
+      "support": {
+        "antrum_and_corpus": 60,
+        "antrum_predominant": 74,
+        "corpus_predominant": 31,
+        "normal": 64
+      }
+    },
+    {
+      "source": "Gastritis_type",
+      "target": "Distribution_of_atrophy",
+      "deterministic": false,
+      "mapping": null,
+      "n_patients_violating_majority_map": 60,
+      "support": {
+        "normal": 64,
+        "type_A": 31,
+        "type_B": 134
+      }
+    }
+  ],
+  "zero_cells": [
+    {
+      "var_a": "H_pylori_infection_status",
+      "value_a": "positive",
+      "var_b": "Distribution_of_atrophy",
+      "value_b": "corpus_predominant",
+      "n_patients": 0
+    },
+    {
+      "var_a": "H_pylori_infection_status",
+      "value_a": "positive",
+      "var_b": "Gastritis_type",
+      "value_b": "type_A",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "atrophic",
+      "var_b": "Distribution_of_atrophy",
+      "value_b": "normal",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "non_atrophic",
+      "var_b": "Distribution_of_atrophy",
+      "value_b": "antrum_and_corpus",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "non_atrophic",
+      "var_b": "Distribution_of_atrophy",
+      "value_b": "antrum_predominant",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "non_atrophic",
+      "var_b": "Distribution_of_atrophy",
+      "value_b": "corpus_predominant",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "atrophic",
+      "var_b": "Gastritis_type",
+      "value_b": "normal",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "non_atrophic",
+      "var_b": "Gastritis_type",
+      "value_b": "type_A",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Presence_of_atrophy",
+      "value_a": "non_atrophic",
+      "var_b": "Gastritis_type",
+      "value_b": "type_B",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "antrum_and_corpus",
+      "var_b": "Gastritis_type",
+      "value_b": "normal",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "antrum_and_corpus",
+      "var_b": "Gastritis_type",
+      "value_b": "type_A",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "antrum_predominant",
+      "var_b": "Gastritis_type",
+      "value_b": "normal",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "antrum_predominant",
+      "var_b": "Gastritis_type",
+      "value_b": "type_A",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "corpus_predominant",
+      "var_b": "Gastritis_type",
+      "value_b": "normal",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "corpus_predominant",
+      "var_b": "Gastritis_type",
+      "value_b": "type_B",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "normal",
+      "var_b": "Gastritis_type",
+      "value_b": "type_A",
+      "n_patients": 0
+    },
+    {
+      "var_a": "Distribution_of_atrophy",
+      "value_a": "normal",
+      "var_b": "Gastritis_type",
+      "value_b": "type_B",
+      "n_patients": 0
+    }
+  ]
+}

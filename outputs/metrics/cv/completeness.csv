@@ -1,0 +1,34 @@
+model,variant,encoder,seeds,complete
+B1 IMG (resnet50),IMG,resnet50,"0,1,2,3,4",True
+B2 IMG (efficientnet_b0),IMG,efficientnet_b0,"0,1,2,3,4",True
+B3 IMG (densenet121),IMG,densenet121,"0,1,2,3,4",True
+A0,A0,efficientnet_b0,"0,1,2,3,4",True
+B4,B4,efficientnet_b0,"0,1,2,3,4",True
+A1,A1,efficientnet_b0,"0,1,2,3,4",True
+A2,A2,efficientnet_b0,"0,1,2,3,4",True
+A3,A3,efficientnet_b0,"0,1,2,3,4",True
+A4,A4,efficientnet_b0,"0,1,2,3,4",True
+A5,A5,efficientnet_b0,"0,1,2,3,4",True
+A6,A6,efficientnet_b0,"0,1,2,3,4",True
+X1,X1,efficientnet_b0,"0,1,2,3,4",True
+X2,X2,efficientnet_b0,"0,1,2,3,4",True
+X3,X3,efficientnet_b0,"0,1,2,3,4",True
+X4,X4,efficientnet_b0,"0,1,2,3,4",True
+M2,M2,efficientnet_b0,"0,1,2,3,4",True
+M3,M3,efficientnet_b0,"0,1,2,3,4",True
+M5,M5,efficientnet_b0,"0,1,2,3,4",True
+M6,M6,efficientnet_b0,"0,1,2,3,4",True
+N1,N1,efficientnet_b0,"0,1,2,3,4",True
+N2,N2,efficientnet_b0,"0,1,2,3,4",True
+N3,N3,efficientnet_b0,"0,1,2,3,4",True
+N4,N4,efficientnet_b0,"0,1,2,3,4",True
+N5,N5,efficientnet_b0,"0,1,2,3,4",True
+N6,N6,efficientnet_b0,"0,1,2,3,4",True
+C1,C1,efficientnet_b0,"0,1,2,3,4",True
+C2,C2,efficientnet_b0,"0,1,2,3,4",True
+C3,C3,efficientnet_b0,"0,1,2,3,4",True
+FT_IMG (densenet121),FT_IMG,densenet121,0,True
+FT_A6 (efficientnet_b0),FT_A6,efficientnet_b0,"0,1,2",True
+FT2_IMG (densenet121),FT2_IMG,densenet121,"0,1",True
+FT2_IMG (efficientnet_b0),FT2_IMG,efficientnet_b0,"0,1",True
+FT2_IMG (resnet50),FT2_IMG,resnet50,"0,1",True

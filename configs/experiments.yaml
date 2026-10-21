@@ -1,0 +1,121 @@
+# Model variants, training hyper-parameters and the prespecified protocol.
+# Fixed BEFORE any test-set evaluation (see research/experiment_protocol.md).
+
+protocol:
+  primary_metric: distribution.macro_f1     # patient-level, primary outcome
+  selection_metric: val_nll                 # early stopping / checkpoint: mean patient-level NLL over the 4 tasks
+  calibration: temperature_on_val           # per independent output group, fitted on validation patients only
+  missing_view_fractions: [1.0, 0.75, 0.5, 0.25]
+  bootstrap: 2000
+  primary_encoder: efficientnet_b0          # prespecified (prompt); encoder sweep reported as secondary analysis
+
+encoders:                                   # timm model ids, all ImageNet-pretrained
+  efficientnet_b0: {timm: efficientnet_b0.ra_in1k}
+  densenet121: {timm: densenet121.tv_in1k}
+  resnet50: {timm: resnet50.tv_in1k}
+  convnext_tiny: {timm: convnext_tiny.fb_in22k_ft_in1k}
+  swin_tiny: {timm: swin_tiny_patch4_window7_224.ms_in22k_ft_in1k}
+  dinov2_small: {timm: vit_small_patch14_dinov2.lvd142m, kwargs: {img_size: 224}}
+
+train:                                      # cached-feature training (patient-level MIL and image-level heads)
+  optimizer: adamw
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  max_epochs: 300                           # same cap as the tuning grid
+  patience: 25
+  batch_patients: 16
+  batch_images: 256                         # image-level baselines
+  hidden: 256
+  attn_dim: 128
+  dropout: 0.25
+  input_dropout: 0.0
+  feature_standardize: true                 # z-score features with training-image statistics
+  supervised_loss: ce                       # ce | weighted_ce | focal
+  focal_gamma: 2.0
+  sampling: shuffle                         # shuffle | balanced (patient-level, by distribution class)
+
+view_dropout:                               # used when a variant sets view_dropout: true
+  mode: subset                              # subset (k = round(r*n), r ~ U[lo,hi]) | bernoulli | fixed_k
+  teacher_ratio: [1.0, 1.0]                 # the larger view: full bag
+  student_ratio: [0.2, 0.8]                 # the smaller view
+  bernoulli_p: 0.5
+  fixed_k: [2, 12]
+
+consistency:                                # cross-view (lambda2); used when a variant sets consistency: true
+  lambda: 1.0
+  temperature: 2.0
+  confidence: 0.7                           # gate: teacher max-probability (T=1) must exceed this
+  warmup_start: 5                           # epochs before the term is switched on
+  warmup_epochs: 15                         # then linear ramp 0 -> lambda
+
+clinical:                                   # soft clinical consistency (lambda1); only for independent heads
+  lambda: 0.5
+
+# Variants. kind: image (image-level heads + mean-probability aggregation) | mil.
+# pooling: mean | attention (one shared gated attention) | task_attention (one per output group).
+# head: independent (4 heads) | structured (H. pylori + distribution; atrophy/type derived via the
+# deterministic mapping re-estimated from each split's training patients).
+variants:
+  IMG:   {kind: image, desc: "Image-level heads, patient = mean of image probabilities (EGID protocol)"}
+  A0:    {kind: mil, pooling: mean, head: independent, desc: "Mean-pooling MIL"}
+  B4:    {kind: mil, pooling: attention, head: independent, desc: "Gated attention MIL"}
+  A1:    {kind: mil, pooling: task_attention, head: independent, desc: "Task-aware attention MIL (B5)"}
+  A2:    {kind: mil, pooling: task_attention, head: structured, desc: "+ structured labels (B6)"}
+  A3:    {kind: mil, pooling: task_attention, head: independent, view_dropout: true, desc: "+ view dropout"}
+  A4:    {kind: mil, pooling: task_attention, head: independent, view_dropout: true, consistency: true, desc: "+ view dropout + consistency"}
+  A5:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, desc: "+ structure + view dropout (B7)"}
+  A6:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, desc: "Full CoRe-MIL (B8)"}
+  X1:    {kind: mil, pooling: task_attention, head: independent, clinical: true, desc: "Task attention + soft clinical consistency"}
+  X2:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, supervised_loss: weighted_ce, desc: "CoRe-MIL, class-weighted CE"}
+  X3:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, supervised_loss: focal, desc: "CoRe-MIL, focal loss"}
+  X4:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, sampling: balanced, desc: "CoRe-MIL, balanced patient sampling"}
+  # POST-HOC EXPLORATORY (added 2026-10-19 after the CV results showed attention pooling overfitting;
+  # see research/experiment_protocol.md §9). Same CoRe-MIL components on mean pooling.
+  M2:    {kind: mil, pooling: mean, head: structured, desc: "Mean pooling + structure (post hoc)"}
+  M3:    {kind: mil, pooling: mean, head: independent, view_dropout: true, desc: "Mean pooling + view dropout (post hoc)"}
+  M5:    {kind: mil, pooling: mean, head: structured, view_dropout: true, desc: "Mean pooling + structure + view dropout (post hoc)"}
+  M6:    {kind: mil, pooling: mean, head: structured, view_dropout: true, consistency: true, desc: "CoRe-MIL with mean pooling (post hoc)"}
+  # ADDENDUM B (research/experiment_protocol.md §11, pre-registered): stronger MIL aggregators.
+  # Family hyper-parameters selected by scripts/tune.py on N1/N3/N5 (inner-validation NLL), reused for N2/N4/N6.
+  N1:    {kind: mil, lr: 3.0e-04, dropout: 0.5, weight_decay: 1.0e-02, hidden: 128, input_dropout: 0.0, pooling: topk, topk: 7, head: independent, desc: "Top-k MIL (k = 7)"}
+  N2:    {kind: mil, lr: 3.0e-04, dropout: 0.5, weight_decay: 1.0e-02, hidden: 128, input_dropout: 0.0, pooling: topk, topk: 7, head: structured, desc: "Top-k MIL + structured head"}
+  N3:    {kind: mil, lr: 3.0e-04, dropout: 0.25, weight_decay: 1.0e-01, hidden: 256, input_dropout: 0.3, pooling: task_attention, mask_topk: 5, mask_p: 0.5, head: independent, desc: "Task-aware attention + ACMIL-style masking"}
+  N4:    {kind: mil, lr: 3.0e-04, dropout: 0.25, weight_decay: 1.0e-01, hidden: 256, input_dropout: 0.3, pooling: task_attention, mask_topk: 5, mask_p: 0.5, head: structured, view_dropout: true, consistency: true, desc: "CoRe-MIL + ACMIL-style masking"}
+  N5:    {kind: mil, lr: 3.0e-04, dropout: 0.5, weight_decay: 1.0e-02, hidden: 128, input_dropout: 0.3, pooling: transformer, tr_layers: 2, tr_heads: 4, tr_ffn: 512, head: independent, desc: "Transformer MIL (TransMIL-style)"}
+  N6:    {kind: mil, lr: 3.0e-04, dropout: 0.5, weight_decay: 1.0e-02, hidden: 128, input_dropout: 0.3, pooling: transformer, tr_layers: 2, tr_heads: 4, tr_ffn: 512, head: structured, desc: "Transformer MIL + structured head"}
+  # ADDENDUM C (research/experiment_protocol.md §12, pre-registered): A6 + image-level auxiliary loss / augmented features.
+  C1:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, img_aux: 0.5, desc: "CoRe-MIL + image-level auxiliary loss"}
+  C2:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, aug_views: 10, desc: "CoRe-MIL + augmented feature views"}
+  C3:    {kind: mil, pooling: task_attention, head: structured, view_dropout: true, consistency: true, img_aux: 0.5, aug_views: 10, desc: "CoRe-MIL + image-level loss + augmented features"}
+
+groups:
+  baselines: [IMG, A0, B4, A1]
+  ablations: [A0, A1, A2, A3, A4, A5, A6]
+  losses: [A6, X1, X2, X3, X4]
+  all: [IMG, A0, B4, A1, A2, A3, A4, A5, A6, X1, X2, X3, X4]
+  encoders: [IMG, A0, A1, A6]
+  posthoc: [M2, M3, M5, M6]
+  addendum_b: [N1, N2, N3, N4, N5, N6]
+  addendum_c: [C1, C2, C3]
+
+# End-to-end fine-tuning variants (scripts/finetune.py, MPS). Not tuned; values are stated a priori.
+finetune_variants:
+  FT_IMG: {kind: image, finetune: true, hidden: 0, dropout: 0.0, lr: 1.0e-4, lr_backbone: 1.0e-4, weight_decay: 1.0e-4,
+           max_epochs: 25, patience: 5, selection: val_mean_acc,
+           desc: "Fine-tuned image-level multitask CNN following the EGID paper protocol (<=25 epochs, patience 5 on validation mean accuracy, mean-probability aggregation)"}
+  FT_A1:  {kind: mil, finetune: true, pooling: task_attention, head: independent, hidden: 256, dropout: 0.25,
+           lr: 3.0e-4, lr_backbone: 5.0e-5, weight_decay: 1.0e-2, max_epochs: 30, patience: 6,
+           desc: "Task-aware attention MIL, end-to-end"}
+  FT_A6:  {kind: mil, finetune: true, pooling: task_attention, head: structured, view_dropout: true, consistency: true,
+           hidden: 256, dropout: 0.25, lr: 3.0e-4, lr_backbone: 5.0e-5, weight_decay: 1.0e-2, max_epochs: 30, patience: 6,
+           desc: "Full CoRe-MIL, end-to-end"}
+  # Addendum A (research/experiment_protocol.md §10): improved fine-tuning recipe, fixed a priori
+  FT2_IMG: {kind: image, finetune: true, hidden: 0, dropout: 0.2, lr: 1.0e-3, lr_backbone: 1.0e-4, weight_decay: 1.0e-4,
+            max_epochs: 30, patience: 6, selection: val_nll,
+            desc: "Fine-tuned image-level multitask CNN, improved recipe (val-NLL early stopping, 10x head lr)"}
+
+# Selected by scripts/tune.py (outputs/tuning/selected_efficientnet_b0.json): mean inner-validation NLL
+# over 5 CV folds, seed 0; 32-point grid. Applied to every frozen-feature variant of that kind.
+tuned:
+  image: {lr: 3.0e-4, dropout: 0.25, weight_decay: 1.0e-2, hidden: 256, input_dropout: 0.3}
+  mil:   {lr: 3.0e-4, dropout: 0.5,  weight_decay: 1.0e-2, hidden: 256, input_dropout: 0.3}

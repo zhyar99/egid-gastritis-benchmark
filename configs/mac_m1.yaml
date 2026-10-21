@@ -1,0 +1,59 @@
+# Hardware / runtime profile for an Apple M1 with 16 GB unified memory.
+paths:
+  data: data                 # read-only; never modified
+  audit: outputs/data_audit
+  splits: outputs/splits
+  cache: cache
+  checkpoints: checkpoints
+  logs: logs
+  outputs: outputs
+
+device: auto                 # auto -> mps if available else cpu; or "mps" / "cpu"
+mil_device: cpu              # small cached-feature MIL models run faster on CPU than MPS (benchmarked, see README)
+num_workers: 0               # macOS spawn workers re-import torch; 0 is the safe default
+torch_threads: 4
+
+preprocessing:
+  sizes: [224]               # add 256 for fine-tuning (random crops), 384 for high-res extraction
+  workers: 6
+
+feature_extraction:
+  batch_size: 32             # lower to 8-16 for Swin / 384 px if MPS reports out-of-memory
+  image_size: 224
+  hflip_tta: false
+
+# Run profiles: which splits / seeds / encoders a run_experiments.py invocation covers.
+profiles:
+  smoke:                     # minutes; checks every component end-to-end on real data
+    splits: [cv0]
+    seeds: [0]
+    encoders: [efficientnet_b0]
+    max_epochs: 3
+    patience: 3
+    max_train_patients: 24
+    missing_view_reps: 2
+  dev:                       # frozen embeddings, development cohort CV only (no test set)
+    splits: [cv0, cv1, cv2, cv3, cv4]
+    seeds: [0, 1, 2]
+    encoders: [efficientnet_b0]
+    missing_view_reps: 5
+  full:                      # CV + primary split with untouched test set, several seeds
+    splits: [cv0, cv1, cv2, cv3, cv4, primary]
+    seeds: [0, 1, 2, 3, 4]
+    encoders: [efficientnet_b0]
+    missing_view_reps: 10
+  encoders:                  # encoder sweep (CV only -> encoder choice never sees the test set)
+    splits: [cv0, cv1, cv2, cv3, cv4]
+    seeds: [0, 1, 2]
+    encoders: [efficientnet_b0, densenet121, resnet50, convnext_tiny, swin_tiny, dinov2_small]
+    missing_view_reps: 10      # same as full, so overlapping runs are shared (identical config hash)
+
+finetune:
+  image_size: 224
+  cache_size: 256            # random crops of 224 from the 256 cache
+  batch_images: 16           # image-level fine-tuning
+  bag_size_train: 12         # images per patient per step (MIL fine-tuning)
+  batch_patients: 2
+  grad_accum: 4
+  eval_chunk: 32
+  amp: false                 # MPS autocast is optional; fp32 is the reliable default

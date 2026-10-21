@@ -1,0 +1,67 @@
+Model,Task,ECE_raw,ECE_cal,NLL_raw,NLL_cal,Brier_raw,Brier_cal
+B1 IMG (resnet50),Atrophy distribution,0.097,0.051,0.83,0.816,0.463,0.459
+B1 IMG (resnet50),H. pylori,0.039,0.05,0.31,0.707,0.184,0.183
+B2 IMG (efficientnet_b0),Atrophy distribution,0.159,0.057,0.846,0.781,0.478,0.442
+B2 IMG (efficientnet_b0),H. pylori,0.061,0.057,0.305,0.501,0.177,0.179
+B3 IMG (densenet121),Atrophy distribution,0.078,0.076,0.77,0.793,0.42,0.418
+B3 IMG (densenet121),H. pylori,0.038,0.05,0.282,0.773,0.168,0.167
+A0,Atrophy distribution,0.071,0.062,0.86,0.847,0.48,0.478
+A0,H. pylori,0.03,0.057,0.274,0.323,0.159,0.162
+B4,Atrophy distribution,0.106,0.103,1.09,1.065,0.605,0.601
+B4,H. pylori,0.044,0.043,0.346,0.341,0.216,0.217
+A1,Atrophy distribution,0.094,0.091,1.023,1.037,0.59,0.594
+A1,H. pylori,0.041,0.042,0.376,0.358,0.224,0.223
+A2,Atrophy distribution,0.104,0.109,1.092,1.11,0.605,0.608
+A2,H. pylori,0.049,0.049,0.39,0.369,0.228,0.226
+A3,Atrophy distribution,0.102,0.095,1.031,1.04,0.589,0.592
+A3,H. pylori,0.043,0.039,0.363,0.352,0.214,0.214
+A4,Atrophy distribution,0.087,0.108,0.961,0.987,0.552,0.563
+A4,H. pylori,0.035,0.048,0.309,0.352,0.189,0.194
+A5,Atrophy distribution,0.089,0.093,1.042,1.046,0.591,0.593
+A5,H. pylori,0.034,0.046,0.362,0.358,0.216,0.217
+A6,Atrophy distribution,0.071,0.091,1.007,1.04,0.573,0.586
+A6,H. pylori,0.035,0.042,0.328,0.348,0.201,0.203
+X1,Atrophy distribution,0.076,0.097,0.988,1.009,0.57,0.577
+X1,H. pylori,0.047,0.042,0.375,0.351,0.223,0.22
+X2,Atrophy distribution,0.1,0.119,1.024,1.062,0.585,0.597
+X2,H. pylori,0.034,0.038,0.336,0.357,0.201,0.202
+X3,Atrophy distribution,0.067,0.079,0.899,0.916,0.517,0.527
+X3,H. pylori,0.147,0.057,0.385,0.324,0.225,0.18
+X4,Atrophy distribution,0.082,0.098,0.992,1.039,0.568,0.583
+X4,H. pylori,0.038,0.037,0.332,0.344,0.203,0.206
+M2,Atrophy distribution,0.082,0.076,0.887,0.865,0.488,0.484
+M2,H. pylori,0.039,0.049,0.284,0.34,0.163,0.167
+M3,Atrophy distribution,0.081,0.067,0.851,0.837,0.474,0.47
+M3,H. pylori,0.042,0.044,0.276,0.32,0.157,0.155
+M5,Atrophy distribution,0.087,0.081,0.851,0.844,0.472,0.471
+M5,H. pylori,0.04,0.053,0.273,0.322,0.156,0.156
+M6,Atrophy distribution,0.052,0.076,0.817,0.845,0.463,0.469
+M6,H. pylori,0.055,0.055,0.289,0.329,0.171,0.176
+N1,Atrophy distribution,0.116,0.086,0.949,0.932,0.55,0.54
+N1,H. pylori,0.031,0.052,0.287,0.305,0.169,0.168
+N2,Atrophy distribution,0.116,0.087,0.967,0.941,0.555,0.543
+N2,H. pylori,0.032,0.051,0.311,0.365,0.187,0.189
+N3,Atrophy distribution,0.099,0.09,1.043,1.045,0.594,0.594
+N3,H. pylori,0.05,0.036,0.382,0.365,0.22,0.22
+N4,Atrophy distribution,0.065,0.092,0.952,0.991,0.534,0.545
+N4,H. pylori,0.038,0.052,0.295,0.348,0.179,0.189
+N5,Atrophy distribution,0.12,0.08,1.098,1.036,0.585,0.571
+N5,H. pylori,0.066,0.048,0.392,0.364,0.224,0.222
+N6,Atrophy distribution,0.163,0.089,1.201,1.052,0.604,0.575
+N6,H. pylori,0.07,0.054,0.41,0.389,0.231,0.23
+C1,Atrophy distribution,0.066,0.092,0.921,0.963,0.526,0.544
+C1,H. pylori,0.048,0.05,0.294,0.359,0.176,0.182
+C2,Atrophy distribution,0.095,0.105,0.951,0.967,0.548,0.553
+C2,H. pylori,0.047,0.067,0.347,0.378,0.219,0.224
+C3,Atrophy distribution,0.063,0.105,0.953,0.981,0.554,0.566
+C3,H. pylori,0.03,0.046,0.328,0.353,0.205,0.207
+FT_IMG (densenet121),Atrophy distribution,0.104,0.076,0.866,0.837,0.486,0.475
+FT_IMG (densenet121),H. pylori,0.075,0.061,0.287,0.379,0.177,0.196
+FT_A6 (efficientnet_b0),Atrophy distribution,0.074,0.077,0.94,0.957,0.536,0.539
+FT_A6 (efficientnet_b0),H. pylori,0.051,0.036,0.393,0.386,0.256,0.255
+FT2_IMG (densenet121),Atrophy distribution,0.087,0.049,0.822,0.81,0.466,0.458
+FT2_IMG (densenet121),H. pylori,0.038,0.046,0.27,0.332,0.165,0.176
+FT2_IMG (efficientnet_b0),Atrophy distribution,0.137,0.082,0.805,0.771,0.451,0.434
+FT2_IMG (efficientnet_b0),H. pylori,0.043,0.045,0.317,0.324,0.197,0.2
+FT2_IMG (resnet50),Atrophy distribution,0.057,0.047,0.853,0.858,0.493,0.492
+FT2_IMG (resnet50),H. pylori,0.041,0.049,0.274,0.578,0.171,0.183
