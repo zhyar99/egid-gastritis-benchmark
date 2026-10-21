@@ -4,8 +4,6 @@ cache/
 checkpoints/
 logs/
 outputs/smoke/
-outputs/predictions/
-outputs/attention/
 __pycache__/
 .pytest_cache/
 .DS_Store
