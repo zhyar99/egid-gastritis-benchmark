@@ -135,8 +135,49 @@ it is described; FT_A6 is end-to-end CoRe-MIL):
 ```
 
 ```bash
-.venv/bin/python scripts/finetune.py --variant FT_A6 --encoder efficientnet_b0 --splits cv0 cv1 cv2 cv3 cv4
+.venv/bin/python scripts/finetune.py --variant FT_A6 --encoder efficientnet_b0 --splits cv0 cv1 cv2 cv3 cv4 primary --seeds 0 1 2 --allow-test
 ```
+
+### Rerunning the post-hoc variants and the pre-registered addenda
+
+Post-hoc mean-pooling variants M2–M6 (cross-validation and test cohort):
+
+```bash
+.venv/bin/python run_experiments.py --profile full --group posthoc --splits cv0 cv1 cv2 cv3 cv4 primary --allow-test
+```
+
+Addendum A, improved fine-tuning recipe (three CNNs, two seeds; repeat for `efficientnet_b0` and `resnet50`):
+
+```bash
+.venv/bin/python scripts/finetune.py --variant FT2_IMG --encoder densenet121 --splits cv0 cv1 cv2 cv3 cv4 primary --seeds 0 1 --allow-test
+```
+
+Addendum B, top-k, masked-attention and transformer MIL (hyperparameter grid on inner validation, then all runs):
+
+```bash
+.venv/bin/python scripts/tune.py --variants N1 N3 N5
+```
+
+```bash
+.venv/bin/python scripts/tune.py --variants N1 N3 N5 --select
+```
+
+```bash
+.venv/bin/python run_experiments.py --profile full --group addendum_b --splits cv0 cv1 cv2 cv3 cv4 primary --allow-test
+```
+
+Addendum C, image-level auxiliary loss and augmented features (ten augmented feature copies, cross-validation only):
+
+```bash
+.venv/bin/python scripts/extract_features.py --encoders efficientnet_b0 --aug-views 10
+```
+
+```bash
+.venv/bin/python run_experiments.py --profile full --group addendum_c --splits cv0 cv1 cv2 cv3 cv4
+```
+
+After any of these, rerun `scripts/evaluate.py --scheme cv` and `--scheme test` to regenerate all tables. Every run
+writes its record to `outputs/runs/` and is skipped if the record exists, so commands can be resumed.
 
 Grad-CAM for a fine-tuned CoRe-MIL fold (supplementary figure):
 
